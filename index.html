@@ -2005,6 +2005,8 @@ function fit() {
   const SA = navigator.standalone || matchMedia("(display-mode: standalone)").matches, portrait = innerHeight >= innerWidth;
   const vw = SA ? (portrait ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height)) : innerWidth;
   const vh = SA ? (portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height)) : ((window.visualViewport && visualViewport.height) || innerHeight);
+  // 홈 화면 앱: 페이지·무대 높이도 화면 전체로 늘려야 아래가 잘리지 않는다
+  const fillH = SA && IS_MOBILE() ? vh + "px" : ""; document.documentElement.style.height = document.body.style.height = fillH; $(".stage").style.height = fillH;
   if (IS_MOBILE()) { scale = Math.min(vw / DESIGN_W, vh / DESIGN_H, 1.2);
     document.documentElement.style.setProperty("--mw", (vw / scale).toFixed(2) + "px"); document.documentElement.style.setProperty("--mh", (vh / scale).toFixed(2) + "px"); }
   else scale = Math.min(1, (innerHeight - 56) / DESIGN_H, (innerWidth - 354 - 64) / DESIGN_W);
